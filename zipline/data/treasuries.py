@@ -46,6 +46,17 @@ def parse_treasury_csv_column(column):
     return str(int(periods)) + ('year' if unit == 'Y' else 'month')
 
 
+def earliest_possible_date():
+    """
+    The earliest date for which we can load data from this module.
+    """
+    # The US Treasury actually has data going back further than this, but it's
+    # pretty rare to find pricing data going back that far, and there's no
+    # reason to make people download benchmarks back to 1950 that they'll never
+    # be able to use.
+    return pd.Timestamp('1980', tz='UTC')
+
+
 def get_treasury_data():
     return pd.read_csv(
         "http://www.federalreserve.gov/datadownload/Output.aspx"
